@@ -1,0 +1,6 @@
+# Nunca suba segredos de equipamentos reais
+*.secret
+*senha*
+*password*
+*community*
+real-configs/
