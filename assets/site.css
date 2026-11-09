@@ -1,0 +1,13 @@
+#theme-toggle {
+  position: fixed; right: 14px; bottom: 14px; z-index: 50;
+  padding: 7px 12px; border-radius: 18px; border: 1px solid #8884;
+  background: #42b983; color: #fff; cursor: pointer; font-size: 13px;
+}
+.sidebar { width: 310px; }
+.content { left: 310px; }
+.markdown-section { max-width: 920px; }
+.markdown-section table { display: table; width: 100%; font-size: 14px; }
+.markdown-section .mermaid { text-align: center; margin: 1.2em 0; }
+.cover-main .buttons a { margin: 4px; }
+.sidebar ul li.sec { font-weight: 700; margin-top: 10px; opacity: .8; }
+@media (max-width: 768px) { .content { left: 0; } }

@@ -21,6 +21,16 @@ flowchart LR
     R3 --- R5["R5 (CE2, site B)"]
 ```
 
+## Ferramentas interativas
+
+| Ferramenta | O que faz |
+|---|---|
+| [Topologia clicável](topologia.html ':ignore') | Clique nos equipamentos e links, troque a camada (física, OSPF, MPLS, TE, serviço) e simule a queda do R2 ou do R4 |
+| [Quiz com correção](quiz.html ':ignore') | 98 questões com feedback imediato, simulado geral e revisão dos erros |
+| [Painel de progresso](painel.html ':ignore') | Marque labs concluídos e acompanhe o desempenho no quiz |
+
+> Essas páginas funcionam no site publicado (GitHub Pages). No GitHub elas aparecem só como arquivos.
+
 ## Como estudar
 
 1. Leia `docs/01-camadas.md` para o mapa geral.
