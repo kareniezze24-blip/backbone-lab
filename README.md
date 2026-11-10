@@ -1,78 +1,49 @@
-# Backbone Lab: estudo de redes de operadora (PE, P, CE e OLT)
+# Backbone Lab
 
-Projeto de estudo para entender, na prática, como funciona o backbone de um
-provedor: camadas, protocolos, redundância e serviços. O laboratório é montado
-no **PNETLab** com equipamentos Huawei (NE40E e CloudEngine 12800).
+Site de estudo de redes de operadora, com três áreas:
 
-> Este repositório é material de estudo. **Não coloque configurações reais de
-> produção aqui** (senhas, hashes, comunidades SNMP, IPs públicos, nomes de
-> clientes). Anonimize antes.
+| Aba | O que tem |
+|---|---|
+| **Conceitos** | 48 tópicos que um analista de rede precisa saber, em 10 módulos: fundamentos, camada 2, roteamento, MPLS, serviços de operadora, acesso (fibra, PON, OLT), QoS, segurança e operação |
+| **Laboratórios** | 15 labs. Cada um traz o fundamento, a topologia interativa, o passo a passo com o porquê de cada etapa, erros para diagnosticar e perguntas de reflexão |
+| **Exercícios** | Quiz por tema, simulado cronometrado, treino de sub-redes com calculadora, flashcards, cenários de diagnóstico e painel de desempenho |
 
-## Topologia alvo
+Também tem busca no conteúdo, tema claro e escuro, e funciona no celular.
+O seu progresso fica salvo no próprio navegador.
 
-```mermaid
-flowchart LR
-    ONU["ONU / cliente"] --- OLT["CE12800<br/>(faz papel de OLT)"]
-    OLT ===|"Eth-Trunk<br/>VLAN 100"| R1["R1 (PE1)"]
-    R1 --- R2["R2 (P)"]
-    R2 --- R3["R3 (PE2)"]
-    R1 --- R4["R4 (P, backup)"]
-    R4 --- R3
-    R3 --- R5["R5 (CE2, site B)"]
+> Material de estudo. **Não coloque aqui configurações reais de produção**
+> (senhas, hashes, comunidades SNMP, IPs públicos, nomes de clientes).
+
+## Como publicar (GitHub Pages)
+
+1. Envie todos os arquivos para a raiz do repositório (o `index.html` precisa ficar na raiz).
+2. Em **Settings > Pages**, deixe a origem em *Deploy from a branch*, branch `main`, pasta `/ (root)`.
+3. Mantenha o arquivo `.nojekyll` na raiz.
+4. Abra `https://SEU-USUARIO.github.io/NOME-DO-REPOSITORIO/` e use **Ctrl+F5**.
+
+O site não depende de nenhum serviço externo: as bibliotecas (markdown-it e Mermaid) já estão na pasta `assets/`.
+
+## Testar no computador
+
+O site carrega arquivos por `fetch`, então não funciona abrindo o `index.html` com duplo clique. Rode um servidor local:
+
+```
+python3 -m http.server 8000
 ```
 
-## Ferramentas interativas
+e abra `http://localhost:8000`.
 
-| Ferramenta | O que faz |
-|---|---|
-| [Topologia clicável](topologia.html ':ignore') | Clique nos equipamentos e links, troque a camada (física, OSPF, MPLS, TE, serviço) e simule a queda do R2 ou do R4 |
-| [Quiz com correção](quiz.html ':ignore') | 98 questões com feedback imediato, simulado geral e revisão dos erros |
-| [Painel de progresso](painel.html ':ignore') | Marque labs concluídos e acompanhe o desempenho no quiz |
+## Estrutura
 
-> Essas páginas funcionam no site publicado (GitHub Pages). No GitHub elas aparecem só como arquivos.
+```
+index.html          página principal
+assets/             estilo, código do site e bibliotecas
+conceitos/          um arquivo .md por tópico (dá para editar direto no GitHub)
+data/index.json     lista de módulos e tópicos, perguntas de fixação
+data/labs.json      os laboratórios
+data/quiz.json      as questões dos exercícios
+data/decks.json     os flashcards
+```
 
-## Como estudar
-
-1. Leia `docs/01-camadas.md` para o mapa geral.
-2. Siga os labs na ordem de `docs/00-roadmap.md`.
-3. Em cada lab: leia o README, digite as configs, rode as verificações.
-4. Depois de funcionar, quebre de propósito (pasta `troubleshooting/`).
-
-## Conteúdo
-
-| Pasta | O que tem |
-|---|---|
-| `docs/` | Conceitos e comandos (índice abaixo) |
-| `diagrams/` | Topologias em Mermaid (o GitHub renderiza) |
-| `labs/` | Um diretório por lab: objetivo e o porquê de cada passo |
-| `exercicios/` | 98 questões com gabarito, por tema |
-| `troubleshooting/` | Cenários de erro para diagnosticar |
-
-## Progresso
-
-Veja o checklist em `docs/00-roadmap.md`.
-
-## Índice dos guias (`docs/`)
-
-| Arquivo | Assunto |
-|---|---|
-| 01-camadas | Mapa das camadas e ordem de montagem |
-| 02-l2-vs-l3-backbone | Link L3 roteado x L2 (Vlanif) |
-| 03-redundancia | Redundância por camada, loop e STP |
-| 04-mpls-e-servicos | Visão geral de MPLS, TE e serviços |
-| 05-l2vpn-vs-l3vpn | Diferença e fluxo de pacote |
-| 06-glossario | Termos |
-| 07-plano-de-enderecamento | IPs do lab |
-| 08-eth-trunk-lacp | Agregação de links |
-| 09-vlan-trunk-access-vlanif | VLAN, trunk, access, Vlanif, QinQ |
-| 10-ospf | OSPF, BFD, ldp-sync, FRR |
-| 11-mpls-ldp | MPLS, LDP e LDP remoto |
-| 12-mpls-te-tunnel | Túneis TE, backup, tunnel-policy |
-| 13-vsi-vpls-pseudowire | VSI, VPLS e pseudowire |
-| 14-mascaras-e-ips | Qual máscara e IP usar |
-| 15-mapa-do-analista-de-rede | Checklist de estudo e lacunas |
-| 16-portas-e-protocolos | Portas, números e preferências |
-
-> Os comandos dos guias 10 a 13 vêm da sintaxe de uma rede real e foram adaptados
-> aos IPs do lab. Eles **ainda não foram testados** no PNETLab: ao montar cada
-> lab, confirme com `?` e anote os ajustes.
+Os textos dos tópicos de **Conceitos** são arquivos Markdown e podem ser ajustados direto no GitHub.
+Para incluir um tópico novo, é preciso registrá-lo também em `data/index.json`.

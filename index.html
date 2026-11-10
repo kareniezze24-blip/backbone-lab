@@ -1,84 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Backbone Lab</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Estudo de redes de operadora: backbone, MPLS, L2VPN, OLT e exercicios para prova">
-  <link id="theme" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/vue.css">
-  <link rel="stylesheet" href="assets/site.css">
-  <script>
-    (function () {
-      var t = null;
-      try { t = localStorage.getItem('bl_theme'); } catch (e) {}
-      if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
-      window.BL_THEME = t === 'dark' ? 'dark' : 'light';
-      if (window.BL_THEME === 'dark') {
-        document.getElementById('theme').href = 'https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/dark.css';
-      }
-    })();
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backbone Lab</title>
+<meta name="description" content="Estudo de redes de operadora: conceitos, laboratórios e exercícios interativos">
+<link rel="stylesheet" href="assets/app.css">
+<script>
+(function () {
+  var t = null; try { t = localStorage.getItem('bl_theme'); } catch (e) {}
+  if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
+  document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+})();
+</script>
 </head>
 <body>
-  <div id="app">Carregando...</div>
-  <script>
-    window.$docsify = {
-      name: 'Backbone Lab',
-      loadSidebar: true,
-      loadNavbar: true,
-      coverpage: true,
-      onlyCover: false,
-      subMaxLevel: 2,
-      auto2top: true,
-      alias: {
-        '/.*/_sidebar.md': '/_sidebar.md',
-        '/.*/_navbar.md': '/_navbar.md'
-      },
-      maxLevel: 3,
-      search: {
-        paths: 'auto',
-        placeholder: 'Buscar no conteúdo...',
-        noData: 'Nada encontrado.',
-        depth: 3
-      },
-      plugins: [
-        function (hook) {
-          hook.doneEach(function () {
-            var blocks = document.querySelectorAll('code.lang-mermaid');
-            blocks.forEach(function (code) {
-              var pre = code.parentElement;
-              var div = document.createElement('div');
-              div.className = 'mermaid';
-              div.textContent = code.textContent;
-              pre.replaceWith(div);
-            });
-            if (blocks.length && window.mermaid) {
-              window.mermaid.run({ querySelector: '.mermaid' });
-            }
-          });
-          hook.ready(function () {
-            var b = document.createElement('button');
-            b.id = 'theme-toggle';
-            b.type = 'button';
-            b.textContent = window.BL_THEME === 'dark' ? 'Tema claro' : 'Tema escuro';
-            b.onclick = function () {
-              var next = window.BL_THEME === 'dark' ? 'light' : 'dark';
-              try { localStorage.setItem('bl_theme', next); } catch (e) {}
-              location.reload();
-            };
-            document.body.appendChild(b);
-          });
-        }
-      ]
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/plugins/search.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
-  <script>
-    if (window.mermaid) {
-      window.mermaid.initialize({ startOnLoad: false, theme: window.BL_THEME === 'dark' ? 'dark' : 'default' });
-    }
-  </script>
+<header class="topbar">
+  <a class="brand" href="#/">Backbone <span>Lab</span></a>
+  <nav class="tabs">
+    <a data-tab="home" href="#/">Início</a>
+    <a data-tab="conceitos" href="#/conceitos">Conceitos</a>
+    <a data-tab="labs" href="#/labs">Laboratórios</a>
+    <a data-tab="exercicios" href="#/exercicios">Exercícios</a>
+  </nav>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Buscar no conteúdo..." aria-label="Buscar">
+    <button class="iconbtn" id="theme" type="button">Tema</button>
+  </div>
+</header>
+<div id="results" class="hidden"></div>
+<div id="app"><div class="main"><p class="muted">Carregando...</p></div></div>
+<script src="assets/markdown-it.min.js"></script>
+<script src="assets/mermaid.min.js"></script>
+<script src="assets/topology.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/labs.js"></script>
+<script src="assets/exercises.js"></script>
+<script>BL.start();</script>
 </body>
 </html>
